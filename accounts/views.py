@@ -3,11 +3,12 @@ from django.shortcuts import render
 # Create your views here.
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView,CreateView 
+from django.views.generic import TemplateView
 from django.urls import reverse_lazy 
 from django.http import HttpResponse
 from . import forms
 from . import models
+from accounts.forms import RadioForm
 
 def index(request):
     return render(request, "accounts/index.html")
@@ -19,7 +20,7 @@ class MyLoginView(LoginView):
 class MyLogoutView(LoginRequiredMixin, LogoutView):
     template_name = "accounts/logout.html"
 
-class IndexView(TemplateView):    #index2
-    template_name = "accounts/index2.html"
 
-
+def index2(request):
+    form = RadioForm
+    return render(request, "accounts/index2.html", {"form" : form})

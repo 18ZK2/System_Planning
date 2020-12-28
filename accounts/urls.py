@@ -4,5 +4,5 @@ urlpatterns = [
     path('',views.index,name = "index"),
     path('login/', views.MyLoginView.as_view(), name="login"),
     path('logout/', views.MyLogoutView.as_view(), name="logout"),
-    path('index2/',views.IndexView.as_view(), name="index2"),
+    path('index2/',views.index2, name="index2"),
 ]

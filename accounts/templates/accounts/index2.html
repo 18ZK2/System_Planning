@@ -2,14 +2,24 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>index</title>
+    <title>ログイン後トップページ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<h1>ログイン後トップページ</h1>
-   <p> 状態入力 </p>
-        {% csrf_token %}
-        {{ form.as_p }}
-<a href="{% url 'logout' %}">ログアウト</a>
+  <center><br><br>
+  <h1>ログイン後トップページ</h1>
+   <h3> 状態入力 </h3>
+
+
+    {{ form.select.label }}
+    {% for radio in form.select %}
+    {{ radio.tag }}
+    <label>{{ radio.choice_label }}</label><br>
+    {% endfor %}
+
+
+    <br>
+    <a href="{% url 'logout' %}">ログアウト</a>
+  </center>
 </body>
 </html>
