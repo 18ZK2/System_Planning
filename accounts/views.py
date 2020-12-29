@@ -20,7 +20,9 @@ class MyLoginView(LoginView):
 class MyLogoutView(LoginRequiredMixin, LogoutView):
     template_name = "accounts/logout.html"
 
-
 def index2(request):
+    return render(request, "accounts/index2.html")
+
+def state(request):
     form = RadioForm
-    return render(request, "accounts/index2.html", {"form" : form})
+    return render(request, "accounts/state.html", {"form" : form})
