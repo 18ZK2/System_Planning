@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.db.models import CASCADE
 
 # Create your models here.
 
@@ -103,3 +104,7 @@ class AuthUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.last_name + ' ' + self.first_name
 
+#state表  0:出勤  1:社用外出  2:私用外出  3:遅刻  4:早退  5:休み  6:午前休  7:午後休  8:テレワーク  9:退社  10:出張
+class EmployeeState(models.Model):
+    userID = models.ForeignKey(AuthUser, on_delete=CASCADE)
+    state = models.IntegerField()

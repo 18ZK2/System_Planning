@@ -4,6 +4,9 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from .models import AuthUser
 from django.contrib.auth.hashers import make_password
+from .models import EmployeeState
+
+admin.site.register(EmployeeState)
 
 @admin.register(AuthUser)
 class AuthUserAdmin(admin.ModelAdmin):
