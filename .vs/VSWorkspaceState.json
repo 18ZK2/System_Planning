@@ -2,9 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\accounts",
-    "\\accounts\\templates",
+    "\\accounts\\migrations",
     "\\myproject"
   ],
-  "SelectedNode": "\\accounts\\tests.py",
+  "SelectedNode": "\\accounts\\dbManage.py",
   "PreviewInSolutionExplorer": false
 }
