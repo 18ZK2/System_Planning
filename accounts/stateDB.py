@@ -1,11 +1,11 @@
 import sqlite3 
-from .models import EmployeeState
-from .forms import RadioForm
 
+#データベースの場所の指定
+conn = sqlite3.connect(r'D:\virtual\venv4\myproject\db.sqlite3')
+c = conn.cursor()
+c.execute("select *from accounts_authuser")
+list1 = c.fetchone()
 
-conn = sqlite3.connect('../db.sqlite3')
-c = conn.cursor
+print (list1[4])
 
-
-conn.commit()
-conn.close
+conn.close()

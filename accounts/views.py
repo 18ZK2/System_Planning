@@ -31,17 +31,18 @@ def index2(request):
 @login_required
 def StateView(request):
     template_name = "accounts/state.html"
-    model = EmployeeState
 
     if request.method == "POST":
         EMPstate = request.POST.get('state', '0')
-        userID = request.user
 
-        conn = sqlite3.connect('../db.sqlite3') #DBへ接続
+        conn = sqlite3.connect(r'D:\virtual\venv4\myproject\db.sqlite3') #DBへ接続
         c = conn.cursor()
-        c.execute( "INSERT INTO EmployeeState value( userID, EMPstate)")
-        conn.commit()  #セーブ
-        conn.close     #DBとの接続をきる
+        username = request.user.userID
+
+        c.execute("INSERT INTO accounts_EmployeeState(userID) values('username')")
+        c.execute("INSERT INTO accounts_EmployeeState(EMPstate) values('EMPstate')")
+        conn.commit()    #セーブ
+        conn.close()     #DBとの接続をきる
         return (template_name)
 
     else:
