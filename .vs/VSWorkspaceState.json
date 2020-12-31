@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\accounts"
+    "\\accounts",
+    "\\accounts\\templates"
   ],
   "SelectedNode": "\\accounts\\dbManage.py",
   "PreviewInSolutionExplorer": false
