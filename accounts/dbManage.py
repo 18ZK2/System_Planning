@@ -1,17 +1,16 @@
-import sqlite3 as sq
+import sqlite3
 from django.contrib import admin
 
-dbName = "..\db.sqlite3"
-connection = sq.connect(dbName)
-cursor = connection.cursor()
-#cursor.execute('select * from accounts_authuser')
-#print(cursor.fetchall())
-cursor.execute("select name from sqlite_master where type='table'")
-tableNames = cursor.fetchall()
-for n in tableNames:
-    print(n)
+tableNames = [('django_migrations',), ('sqlite_sequence',), ('django_content_type',), ('auth_group_permissions',), ('auth_permission',), ('auth_group',), ('accounts_authuser',), ('accounts_authuser_groups',), ('accounts_authuser_user_permissions',), ('accounts_employeestate',), ('django_admin_log',), ('django_session',)]
+#select name from sqlite_master where type='table';
 
-for n in tableNames:
-    exeCode = 'select * from '+n[0]
+def NameSearch(name):
+    print(name)
+    dbPath = "..\db.sqlite3"
+    connection = sqlite3.connect(dbPath)
+    print(connection)
+    cursor = connection.cursor()
+    print(cursor)
+    exeCode = 'select userID from '+tableNames[6][0]
     cursor.execute(exeCode)
-    print(cursor.fetchall())
+    return cursor.fetchall()
