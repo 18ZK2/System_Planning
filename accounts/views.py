@@ -39,11 +39,11 @@ def StateView(request):
         c = conn.cursor()
         username = request.user.userID
 
-        c.execute("INSERT INTO accounts_EmployeeState(userID) values('username')")
-        c.execute("INSERT INTO accounts_EmployeeState(EMPstate) values('EMPstate')")
+        c.execute("INSERT INTO accounts_EmployeeState(userID) values(username)")
+        c.execute("INSERT INTO accounts_EmployeeState(EMPstate) values(EMPstate) ")
         conn.commit()    #セーブ
         conn.close()     #DBとの接続をきる
-        return (template_name)
+        return HttpResponse("入力完了")
 
     else:
         return render(request, template_name)
