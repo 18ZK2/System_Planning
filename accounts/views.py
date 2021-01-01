@@ -49,7 +49,7 @@ def StateView(request):
             EMPstate=state,
         )
 
-        return HttpResponse("入力完了")
+        return redirect("index2")
 
     else:
         return render(request, template_name)
