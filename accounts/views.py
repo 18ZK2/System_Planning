@@ -35,28 +35,27 @@ def index2(request):
 
     return render(request, "accounts/index2.html")
 
+#コネクトしなくてもデータベース使えます！
 @login_required
 def StateView(request):
     template_name = "accounts/state.html"
 
     if request.method == "POST":
         EMPstate = request.POST.get('state', '0')
-
-        conn = sqlite3.connect(r'D:\virtual\venv4\myproject\db.sqlite3') #DBへ接続
-        c = conn.cursor()
         username = request.user.userID
 
-        c.execute("INSERT INTO accounts_EmployeeState(userID) values(username)")
-        c.execute("INSERT INTO accounts_EmployeeState(EMPstate) values(EMPstate) ")
-        conn.commit()    #セーブ
-        conn.close()     #DBとの接続をきる
+        EmployeeState.objects.update_or_create(
+            userID=username,
+            EMPstate=state,
+        )
+
         return HttpResponse("入力完了")
 
     else:
         return render(request, template_name)
 
 
-    request(request, template_name)
+    return(request, template_name)
 
 def state(request):
     form = RadioForm
