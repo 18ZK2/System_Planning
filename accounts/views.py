@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 # Create your views here.
 from django.contrib.auth.views import LoginView, LogoutView
@@ -43,6 +43,8 @@ def StateView(request):
     if request.method == "POST":
         EMPstate = request.POST.get('state', '0')
         username = request.user.userID
+
+        EmployeeState.objects.filter(userID=username).delete()
 
         EmployeeState.objects.update_or_create(
             userID=username,
