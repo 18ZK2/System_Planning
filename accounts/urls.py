@@ -6,6 +6,5 @@ urlpatterns = [
     path('logout/', views.MyLogoutView.as_view(), name="logout"),
     path('index2/',views.index2, name="index2"),
     path('state/',views.StateView, name = "state"),
-    path('state/',views.state,name = "state"),
-    path('search/',views.search,name='search')
+    path('search/',views.search,name='search'),
 ]

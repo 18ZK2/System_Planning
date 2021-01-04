@@ -1,4 +1,4 @@
-﻿
+
     <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +8,7 @@
 </head>
 <body>
  <a href="{% url 'index2' %}">ホームページ</a>
- <center>
-     <br><br>
+  <center><br><br>
      <h3> 状態入力 </h3>
        <form id="state" method="POST">
          {% csrf_token %}
@@ -29,12 +28,5 @@
        </form>
 
   </center>
-     {{ form.select.label }}
-     {% for radio in form.select %}
-     {{ radio.tag }}
-     <label>{{ radio.choice_label }}</label><br>
-     {% endfor %}
-     
- </center>
 </body>
 </html>

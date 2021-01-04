@@ -1,9 +1,8 @@
-from django.shortcuts import redirect, render
-
 # Create your views here.
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy 
 from django.http import HttpResponse
 from . import forms
@@ -12,11 +11,8 @@ from .models import EmployeeState
 from django.template import context
 import sqlite3
 from django.contrib.auth.decorators import login_required
-from accounts.forms import RadioForm
 from accounts.forms import SearchForm
-
-from .dbManage import NameSearch
-
+from accounts.dbManage import NameSearch
 
 def index(request):
     return render(request, "accounts/index.html")
@@ -27,7 +23,6 @@ class MyLoginView(LoginView):
 
 
 class MyLogoutView(LoginRequiredMixin, LogoutView):
-
     template_name = "accounts/logout.html"
 
 @login_required
@@ -35,13 +30,14 @@ def index2(request):
     data = EmployeeState.objects.all()
     params = {'data': data}
     return render(request, "accounts/index2.html",params)
-#コネクトしなくてもデータベース使えます！
+
 @login_required
 def StateView(request):
     template_name = "accounts/state.html"
 
     if request.method == "POST":
-        EMPstate = request.POST.get('state', '0')
+        
+        state = request.POST.get('state', '0')
         username = request.user.userID
 
         EmployeeState.objects.filter(userID=username).delete()
@@ -50,7 +46,6 @@ def StateView(request):
             userID=username,
             EMPstate=state,
         )
-
         return redirect("index2")
 
     else:
@@ -59,16 +54,13 @@ def StateView(request):
 
     return(request, template_name)
 
-def state(request):
-    form = RadioForm
-    return render(request, "accounts/state.html", {"form" : form})
-
 def search(request):
     url = 'accounts/search.html'
     f = SearchForm()
     if(request.method =='POST'):
         #入力が入ってきた
         f=SearchForm(request.POST)
+        #値があるなら
         if(f.is_valid()):
             res = f.cleaned_data
             print(res)

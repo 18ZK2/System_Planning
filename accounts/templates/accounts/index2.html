@@ -6,12 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <a href="{% url 'logout' %}">ログアウト</a><br>
-    <a href="{% url 'state' %}">状態の入力</a><br>
-    <a href="{% url 'search' %}">検索</a><br>
-
-    <div class =hyouji >
-     <h2>あなたの現在の状態</h2>
+  <div class =hyouji >
+    <h2>あなたの現在の状態</h2>
      <table border="1">
         <tr>
             <th>名前</th>
@@ -23,23 +19,28 @@
             {% if EmployeeState.EMPstate == 0 %}<td>入力なし</td>{% endif %}　
             {% if EmployeeState.EMPstate == 1 %}<td>出勤</td>{% endif %}
             {% if EmployeeState.EMPstate == 2 %}<td>社用外出</td>{% endif %}
-            {% if EmployeeState.EMPstate == 3 %}<td>私用外出<</td>{% endif %}
+            {% if EmployeeState.EMPstate == 3 %}<td>私用外出</td>{% endif %}
             {% if EmployeeState.EMPstate == 4 %}<td>遅刻</td>{% endif %}
             {% if EmployeeState.EMPstate == 5 %}<td>早退</td>{% endif %}
             {% if EmployeeState.EMPstate == 6 %}<td>休み</td>{% endif %}
-            {% if EmployeeState.EMPstate == 7 %}<td>>午前休</td>{% endif %}
+            {% if EmployeeState.EMPstate == 7 %}<td>午前休</td>{% endif %}
             {% if EmployeeState.EMPstate == 8 %}<td>午後休</td>{% endif %}
             {% if EmployeeState.EMPstate == 9 %}<td>テレワーク</td>{% endif %}
-            {% if EmployeeState.EMPstate == 10 %}<td>>退社</td>{% endif %}
+            {% if EmployeeState.EMPstate == 10 %}<td>退社</td>{% endif %}
             {% if EmployeeState.EMPstate == 11 %}<td>出張</td>{% endif %}    
         </tr>
         {% endfor %}
       </table>
     </div>
 
-    <center>
-        <br><br>
-        <h1>ログイン後トップページ</h1>
-    </center>
+    <a href="{% url 'logout' %}">ログアウト</a><br>
+    <a href="{% url 'state' %}">状態の入力</a>
+    <a href="{% url 'search' %}">検索</a><br>
+    
+  <center><br><br>
+      <h1>ログイン後トップページ</h1>
+
+
+  </center>
 </body>
 </html>

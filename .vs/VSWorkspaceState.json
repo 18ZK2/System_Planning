@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\accounts",
+    "\\accounts\\templates",
     "\\accounts\\templates\\accounts",
-    "\\myproject"
+    "\\myproject",
+    "\\pics"
   ],
   "SelectedNode": "\\accounts\\views.py",
   "PreviewInSolutionExplorer": false
