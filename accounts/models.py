@@ -5,6 +5,8 @@ from django.db.models import CASCADE
 
 # Create your models here.
 
+
+
 class AuthUserManager(BaseUserManager):
     def create_user(self, userID, email, password, last_name, first_name):
         """
@@ -109,5 +111,3 @@ class EmployeeState(models.Model):
     #userID = models.ForeignKey(AuthUser, on_delete=CASCADE, null=True, blank=True)
     userID = models.CharField(max_length=100, null=False, blank=True, primary_key=True)
     EMPstate = models.IntegerField(null=True, blank=True)
-
-    
