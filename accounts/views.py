@@ -32,9 +32,9 @@ class MyLogoutView(LoginRequiredMixin, LogoutView):
 
 @login_required
 def index2(request):
-
-    return render(request, "accounts/index2.html")
-
+    data = EmployeeState.objects.all()
+    params = {'data': data}
+    return render(request, "accounts/index2.html",params)
 #コネクトしなくてもデータベース使えます！
 @login_required
 def StateView(request):
