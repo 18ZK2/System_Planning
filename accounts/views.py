@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from . import forms
 from . import models
 from .models import EmployeeState
+from .models import RoomCheck
 from django.template import context
 import sqlite3
 from django.contrib.auth.decorators import login_required
@@ -66,3 +67,26 @@ def search(request):
             res = f.cleaned_data
             result = NameSearch(res['nameSerchField'])
     return render(request,url,{'form':f,'searchResult':result})
+
+@login_required
+def CheckIn(request):
+    template_name = "accounts/shirahama.html"
+
+    if request.method == "POST":
+        
+        room = request.POST.get('room', '0')
+        username = request.user.userID
+
+        RoomCheck.objects.filter(userID=username).delete()
+
+        RoomCheck.objects.update_or_create(
+            userID=username,
+            RoomID=room,
+        )
+        return redirect("index2")
+
+    else:
+        return render(request, template_name)
+
+
+    return(request, template_name)

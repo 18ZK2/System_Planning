@@ -111,3 +111,8 @@ class EmployeeState(models.Model):
     #userID = models.ForeignKey(AuthUser, on_delete=CASCADE, null=True, blank=True)
     userID = models.CharField(max_length=100, null=False, blank=True, primary_key=True)
     EMPstate = models.IntegerField(null=True, blank=True)
+
+class RoomCheck(models.Model):
+    #userID = models.ForeignKey(AuthUser, on_delete=CASCADE, null=True, blank=True)
+    userID = models.CharField(max_length=100, null=False, blank=True, primary_key=True)
+    RoomID = models.IntegerField(null=True, blank=True)
