@@ -28,8 +28,10 @@ class MyLogoutView(LoginRequiredMixin, LogoutView):
 
 @login_required
 def index2(request):
-    data = EmployeeState.objects.all()
-    params = {'data': data}
+    username = request.user.userID
+    data = EmployeeState.objects.all().filter(userID=username)
+    data2 = RoomCheck.objects.all().filter(userID=username)
+    params = {'data': data, 'data2':data2}
     return render(request, "accounts/index2.html",params)
 
 @login_required
@@ -70,11 +72,15 @@ def search(request):
 
 @login_required
 def CheckIn(request):
-    template_name = "accounts/shirahama.html"
+    template_name = "accounts/shirahama1f.html"
+    username = request.user.userID
+    data = EmployeeState.objects.all()
+    data2 = RoomCheck.objects.all()
+    params = {'data': data, 'data2':data2}
 
     if request.method == "POST":
         
-        room = request.POST.get('room', '0')
+        room = request.POST.get('get_room_name', '0')
         username = request.user.userID
 
         RoomCheck.objects.filter(userID=username).delete()
@@ -86,7 +92,33 @@ def CheckIn(request):
         return redirect("index2")
 
     else:
-        return render(request, template_name)
+        return render(request, template_name, params)
 
 
-    return(request, template_name)
+    return(request, template_name, params)
+
+def CheckIn2(request):
+    template_name = "accounts/shirahama2f.html"
+    username = request.user.userID
+    data = EmployeeState.objects.all()
+    data2 = RoomCheck.objects.all()
+    params = {'data': data, 'data2':data2}
+
+    if request.method == "POST":
+        
+        room = request.POST.get('get_room_name', '0')
+        username = request.user.userID
+
+        RoomCheck.objects.filter(userID=username).delete()
+
+        RoomCheck.objects.update_or_create(
+            userID=username,
+            RoomID=room,
+        )
+        return redirect("index2")
+
+    else:
+        return render(request, template_name, params)
+
+
+    return(request, template_name, params)

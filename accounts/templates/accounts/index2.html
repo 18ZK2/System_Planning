@@ -12,6 +12,7 @@
         <tr>
             <th>名前</th>
             <th>状態</th>
+            <th>場所</th>
         </tr>
         {% for EmployeeState in data %}
         <tr>
@@ -28,14 +29,20 @@
             {% if EmployeeState.EMPstate == 9 %}<td>テレワーク</td>{% endif %}
             {% if EmployeeState.EMPstate == 10 %}<td>退社</td>{% endif %}
             {% if EmployeeState.EMPstate == 11 %}<td>出張</td>{% endif %}    
+            {% for RoomCheck in data2 %}
+            {% if RoomCheck.RoomID == 0%}<td>社外</td>
+            {%else%}<td>{{ RoomCheck.RoomID }}号室</td>{% endif %}
+            {% endfor %}
         </tr>
         {% endfor %}
+        
       </table>
     </div>
 
     <a href="{% url 'logout' %}">ログアウト</a><br>
     <a href="{% url 'state' %}">状態の入力</a><br />
-    <a href="{% url 'CheckIn' %}">チェックイン</a><br>
+    <a href="{% url 'shirahama1f' %}">白浜1f</a><br>
+    <a href="{% url 'shirahama2f' %}">白浜2f</a><br>
     <a href="{% url 'search' %}">検索</a><br>
     
   <center><br><br>
