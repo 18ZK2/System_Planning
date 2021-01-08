@@ -4,9 +4,8 @@
     "\\accounts",
     "\\accounts\\templates",
     "\\accounts\\templates\\accounts",
-    "\\myproject",
-    "\\pics"
+    "\\myproject"
   ],
-  "SelectedNode": "\\accounts\\dbManage.py",
+  "SelectedNode": "\\accounts\\views.py",
   "PreviewInSolutionExplorer": false
 }

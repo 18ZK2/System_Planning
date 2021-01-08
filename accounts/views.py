@@ -13,7 +13,7 @@ from django.template import context
 import sqlite3
 from django.contrib.auth.decorators import login_required
 from accounts.forms import SearchForm
-from accounts.dbManage import NameSearch,TableInfo
+from accounts.dbManage import StateSearch,PlaceSearch,TableInfo
 
 def index(request):
     return render(request, "accounts/index.html")
@@ -60,15 +60,16 @@ def StateView(request):
 def search(request):
     url = 'accounts/search.html'
     f = SearchForm()
-    result =''
+    result = ['','']
     if(request.method =='POST'):
         #入力が入ってきた
         f=SearchForm(request.POST)
         #値があるなら
         if(f.is_valid()):
             res = f.cleaned_data
-            result = NameSearch(res['nameSerchField'])
-    return render(request,url,{'form':f,'searchResult':result})
+            result = [StateSearch(res['nameSearchField']),PlaceSearch(res['placeSearcField'])]
+    return render(request,url,
+                  {'form':f,'searchResult':result[0],'placeResult':result[1]})
 
 @login_required
 def CheckIn(request):

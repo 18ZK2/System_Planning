@@ -13,4 +13,5 @@ class LoginForm(auth_forms.AuthenticationForm):
 
 class SearchForm(forms.Form):
 
-    nameSerchField =forms.CharField()
+    nameSearchField =forms.CharField(label='ゆーざーIDから状態',required=False,)
+    placeSearcField =forms.IntegerField(label='出勤場所からユーザーID',required=False,)
