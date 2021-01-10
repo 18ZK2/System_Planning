@@ -12,8 +12,9 @@ from .models import RoomCheck
 from django.template import context
 import sqlite3
 from django.contrib.auth.decorators import login_required
-from accounts.forms import SearchForm
-from accounts.dbManage import StateSearch,PlaceSearch,TableInfo
+from .forms import SearchForm,MakeMapForm
+from .dbManage import StateSearch,PlaceSearch,TableInfo
+from .AddMap import CheckinMaps
 
 def index(request):
     return render(request, "accounts/index.html")
@@ -57,7 +58,7 @@ def StateView(request):
 
     return(request, template_name)
 
-def search(request):
+def Search(request):
     url = 'accounts/search.html'
     f = SearchForm()
     result = ['','']
@@ -123,3 +124,12 @@ def CheckIn2(request):
 
 
     return(request, template_name, params)
+
+def MakeMaps(request):
+    if(request.method =='POST'):
+        #入力が入ってきた
+        cm = CheckinMaps()
+        if('goImageMapGenerator' in request.POST):
+            #webページを開く
+            #print(res['slicedMaps'])
+    return render(request,'accounts/makeMaps.html',{'form':f,})

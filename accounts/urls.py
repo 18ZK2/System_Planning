@@ -6,7 +6,8 @@ urlpatterns = [
     path('logout/', views.MyLogoutView.as_view(), name="logout"),
     path('index2/',views.index2, name="index2"),
     path('state/',views.StateView, name = "state"),
-    path('search/',views.search,name='search'),
+    path('search/',views.Search,name='search'),
     path('shirahama1f/',views.CheckIn,name='shirahama1f'),
     path('shirahama2f/',views.CheckIn2,name='shirahama2f'),
+    path('makeMaps/',views.MakeMaps,name='makeMaps'),
 ]
