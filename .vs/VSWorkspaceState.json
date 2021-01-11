@@ -3,8 +3,8 @@
     "",
     "\\accounts",
     "\\accounts\\templates",
-    "\\accounts\\templates\\accounts",
-    "\\myproject"
+    "\\accounts\\templates\\accounts"
   ],
+  "SelectedNode": "\\accounts\\templates\\accounts\\shirahama2f.html",
   "PreviewInSolutionExplorer": false
 }

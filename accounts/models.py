@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db.models import CASCADE
+from django.utils import timezone
 
 # Create your models here.
 
@@ -56,7 +57,6 @@ class AuthUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
 class AuthUser(AbstractBaseUser, PermissionsMixin):
     """
     ユーザ情報を管理する
@@ -105,14 +105,15 @@ class AuthUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.last_name + ' ' + self.first_name
-
 #state表  0:出勤  1:社用外出  2:私用外出  3:遅刻  4:早退  5:休み  6:午前休  7:午後休  8:テレワーク  9:退社  10:出張
 class EmployeeState(models.Model):
     #userID = models.ForeignKey(AuthUser, on_delete=CASCADE, null=True, blank=True)
     userID = models.CharField(max_length=100, null=False, blank=True, primary_key=True)
-    EMPstate = models.IntegerField(null=True, blank=True)
+    EMPstate = models.CharField(max_length=100, null=True, blank=True)
+    RoomID = models.CharField(max_length=100, null=True, blank=True)
+    regist_date = models.DateTimeField(default=timezone.now)
 
-class RoomCheck(models.Model):
-    #userID = models.ForeignKey(AuthUser, on_delete=CASCADE, null=True, blank=True)
-    userID = models.CharField(max_length=100, null=False, blank=True, primary_key=True)
-    RoomID = models.IntegerField(null=True, blank=True)
+class MapsSettings(models.Model):
+    RoomName = models.CharField(max_length=100)
+    Shape = models.CharField(max_length=100)
+    Coords = models.CharField(max_length=100)

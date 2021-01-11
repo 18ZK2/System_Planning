@@ -8,12 +8,11 @@ from django.http import HttpResponse
 from . import forms
 from . import models
 from .models import EmployeeState
-from .models import RoomCheck
 from django.template import context
 import sqlite3
 from django.contrib.auth.decorators import login_required
-from .forms import SearchForm,MakeMapForm
-from .dbManage import StateSearch,PlaceSearch,TableInfo
+from .forms import SearchForm,MakeMapForm,MapNameForm
+from .dbManage import StateSearch,PlaceSearch,TableInfo,empStateDic,RatestMapNum
 from .AddMap import CheckinMaps
 
 def index(request):
@@ -31,8 +30,8 @@ class MyLogoutView(LoginRequiredMixin, LogoutView):
 def index2(request):
     username = request.user.userID
     data = EmployeeState.objects.all().filter(userID=username)
-    data2 = RoomCheck.objects.all().filter(userID=username)
-    params = {'data': data, 'data2':data2}
+    print(data)
+    params = {'data': data}
     return render(request, "accounts/index2.html",params)
 
 @login_required
@@ -74,23 +73,21 @@ def Search(request):
 
 @login_required
 def CheckIn(request):
+    #部屋の場所変更
     template_name = "accounts/shirahama1f.html"
     username = request.user.userID
     data = EmployeeState.objects.all()
-    data2 = RoomCheck.objects.all()
-    params = {'data': data, 'data2':data2}
+    params = {'data': data}
 
     if request.method == "POST":
         
         room = request.POST.get('get_room_name', '0')
         username = request.user.userID
 
-        RoomCheck.objects.filter(userID=username).delete()
+        S = EmployeeState.objects.filter(userID=username).first()
+        S.RoomID = room
+        S.save()
 
-        RoomCheck.objects.update_or_create(
-            userID=username,
-            RoomID=room,
-        )
         return redirect("index2")
 
     else:
@@ -100,23 +97,21 @@ def CheckIn(request):
     return(request, template_name, params)
 
 def CheckIn2(request):
+    #部屋の場所変更
     template_name = "accounts/shirahama2f.html"
     username = request.user.userID
     data = EmployeeState.objects.all()
-    data2 = RoomCheck.objects.all()
-    params = {'data': data, 'data2':data2}
+    params = {'data': data}
 
     if request.method == "POST":
         
         room = request.POST.get('get_room_name', '0')
         username = request.user.userID
 
-        RoomCheck.objects.filter(userID=username).delete()
-
-        RoomCheck.objects.update_or_create(
-            userID=username,
-            RoomID=room,
-        )
+        S = EmployeeState.objects.filter(userID=username).first()
+        S.RoomID = room
+        S.save()
+        
         return redirect("index2")
 
     else:
@@ -126,10 +121,16 @@ def CheckIn2(request):
     return(request, template_name, params)
 
 def MakeMaps(request):
+    #マップ追加
+    url = 'accounts/makeMaps.html'
+    f = MakeMapForm()
     if(request.method =='POST'):
-        #入力が入ってきた
+        #イメージマップジェネレータからもらってきた
+        f = MakeMapForm(request.POST)
+        print(f)
         cm = CheckinMaps()
-        if('goImageMapGenerator' in request.POST):
-            #webページを開く
-            #print(res['slicedMaps'])
-    return render(request,'accounts/makeMaps.html',{'form':f,})
+        slicedTexts = cm.SplitTexts(f.cleaned_data['slicedMaps'])
+        cm.NumberingImagemapShapes(slicedTexts)
+        
+
+    return render(request,url,{'form':f})

@@ -17,5 +17,8 @@ class SearchForm(forms.Form):
     placeSearcField =forms.IntegerField(label='出勤場所からユーザーID',required=False,)
 
 class MakeMapForm(forms.Form):
-    pass
-    #slicedMaps = forms.CharField(widget=forms.Textarea)
+
+    slicedMaps = forms.CharField(widget=forms.Textarea)
+class MapNameForm(forms.Form):
+
+    name = forms.CharField(label='部屋名',required=False,)
