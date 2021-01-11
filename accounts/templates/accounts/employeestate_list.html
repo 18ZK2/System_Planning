@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>position</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<a href="{% url 'index2' %}">ホームページ</a>
+<a href="{% url 'rooms' %}">検索前に戻る</a>
+
+<form action="" method="get">
+    <input name="query" value="{{ request.GET.query }}" type="text">
+    <button type="submit">検索する</button>
+    <p>検索したい内容：名前、状態、部屋等を入力する<br>白浜だけでも可能</p>
+</form>
+
+  <div class =Disp>
+     <table border="1">
+        <tr>
+            <th>名前</th>
+            <th>状態</th>
+            <th>場所</th>
+        </tr>
+        {% for EmployeeState in object_list %}
+        <tr>
+            <td>{{ EmployeeState.userID }}</td>
+            <td>{{ EmployeeState.EMPstate }}</td>
+            <td>{{ EmployeeState.RoomID }}</td>
+        </tr>
+        {% endfor %}
+        
+      </table>
+    </div>
+</body>
+</html>

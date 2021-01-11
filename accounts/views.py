@@ -1,7 +1,7 @@
 # Create your views here.
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy 
 from django.http import HttpResponse
@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import SearchForm,MakeMapForm,MapNameForm
 from .dbManage import StateSearch,PlaceSearch,TableInfo,empStateDic,RatestMapNum
 from .AddMap import CheckinMaps
+from django.db.models import Q
 
 def index(request):
     return render(request, "accounts/index.html")
@@ -43,12 +44,16 @@ def StateView(request):
         state = request.POST.get('state', '0')
         username = request.user.userID
 
-        EmployeeState.objects.filter(userID=username).delete()
-
+        '''EmployeeState.objects.filter(userID=username).delete()
         EmployeeState.objects.update_or_create(
             userID=username,
             EMPstate=state,
-        )
+        )'''
+
+        S = EmployeeState.objects.filter(userID=username).first()
+        S.EMPstate = state
+        S.save()
+
         return redirect("index2")
 
     else:
@@ -134,3 +139,16 @@ def MakeMaps(request):
         
 
     return render(request,url,{'form':f})
+
+class RoomsView(ListView, LoginRequiredMixin):
+    model = EmployeeState
+
+    def get_queryset(self):
+        q_word = self.request.GET.get('query')
+ 
+        if q_word:
+            object_list = EmployeeState.objects.filter(
+                Q(userID__icontains=q_word) | Q(RoomID__icontains=q_word) | Q(EMPstate__icontains=q_word))
+        else:
+            object_list = EmployeeState.objects.all()
+        return object_list

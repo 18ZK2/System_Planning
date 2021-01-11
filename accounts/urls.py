@@ -10,4 +10,5 @@ urlpatterns = [
     path('shirahama1f/',views.CheckIn,name='shirahama1f'),
     path('shirahama2f/',views.CheckIn2,name='shirahama2f'),
     path('makeMaps/',views.MakeMaps,name='makeMaps'),
+    path('rooms/',views.RoomsView.as_view(), name='rooms'),
 ]
