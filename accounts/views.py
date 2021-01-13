@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy 
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 from . import forms
 from . import models
 from .models import EmployeeState
@@ -144,11 +144,19 @@ class RoomsView(ListView, LoginRequiredMixin):
     model = EmployeeState
 
     def get_queryset(self):
-        q_word = self.request.GET.get('query')
- 
-        if q_word:
-            object_list = EmployeeState.objects.filter(
-                Q(userID__icontains=q_word) | Q(RoomID__icontains=q_word) | Q(EMPstate__icontains=q_word))
+
+        if 'name' in self.request.GET:
+            q_word = self.request.GET.get('name')
+            object_list = EmployeeState.objects.filter( Q(userID__icontains=q_word) ) 
+
+        elif 'state' in self.request.GET:
+            q_word = self.request.GET.get('state')
+            object_list = EmployeeState.objects.filter( Q(EMPstate__iexact=q_word) )
+
+        elif 'room' in self.request.GET:
+            q_word = self.request.GET.get('room')
+            object_list = EmployeeState.objects.filter( Q(RoomID__iexact=q_word) )
+
         else:
             object_list = EmployeeState.objects.all()
         return object_list

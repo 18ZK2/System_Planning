@@ -43,12 +43,14 @@
      <area shape="poly" coords="886,275,1020,275,1017,413,888,411,888,412" nohref alt="26" onclick="getname(this.alt)" />
      <area shape="poly" coords="890,417,1016,415,1019,486,889,482,889,482" nohref alt="27" onclick="getname(this.alt)" />
      <area shape="poly" coords="889,484,1016,488,1016,584,889,581,889,581" nohref alt="28" onclick="getname(this.alt)" />
+
 <script>
 <!--document.formのname.テキストボックスのname.テキストボックスのvalue=areaのalt-->
      function getname(alt){
        document.room.get_room_name.value =alt;
      }
 </script>
+
   </map>
  </form>
   <div class =hyouji>
@@ -63,8 +65,20 @@
         {% for EmployeeState in data %}
         <tr>
             <td>{{ EmployeeState.userID }}</td>
-            <td>{{ EmployeeState.EMPstate }}</td>
-            <td>{{ EmployeeState.RoomID }}</td>
+            {% if EmployeeState.EMPstate == "0" %}<td>入力なし</td>{% endif %}　
+            {% if EmployeeState.EMPstate == "1" %}<td>出勤</td>{% endif %}
+            {% if EmployeeState.EMPstate == "2" %}<td>社用外出</td>{% endif %}
+            {% if EmployeeState.EMPstate == "3" %}<td>私用外出</td>{% endif %}
+            {% if EmployeeState.EMPstate == "4" %}<td>遅刻</td>{% endif %}
+            {% if EmployeeState.EMPstate == "5" %}<td>早退</td>{% endif %}
+            {% if EmployeeState.EMPstate == "6" %}<td>休み</td>{% endif %}
+            {% if EmployeeState.EMPstate == "7"%}<td>午前休</td>{% endif %}
+            {% if EmployeeState.EMPstate == "8" %}<td>午後休</td>{% endif %}
+            {% if EmployeeState.EMPstate == "9" %}<td>テレワーク</td>{% endif %}
+            {% if EmployeeState.EMPstate == "10" %}<td>退社</td>{% endif %}
+            {% if EmployeeState.EMPstate == "11" %}<td>出張</td>{% endif %} 
+            {% if EmployeeState.RoomID == "0" %}<td>入力なし</td>
+            {% else %}<td>{{ EmployeeState.RoomID }}号室</td>{% endif %}
         </tr>
         {% endfor %}
         
