@@ -12,9 +12,10 @@ from django.template import context
 import sqlite3
 from django.contrib.auth.decorators import login_required
 from .forms import SearchForm,MakeMapForm,MapNameForm
-from .dbManage import StateSearch,PlaceSearch,TableInfo,empStateDic,RatestMapNum
-from .AddMap import CheckinMaps
+from .dbManage import StateSearch,PlaceSearch,TableInfo,empStateDic,RatestMapNum,SelectMap
+from .AddMap import CheckinMaps,BuildHTML
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     return render(request, "accounts/index.html")
@@ -139,6 +140,14 @@ def MakeMaps(request):
         
 
     return render(request,url,{'form':f})
+
+@csrf_exempt
+def ShowMap(request):
+    m = BuildHTML()
+    s = SelectMap(0,6)
+    
+    return HttpResponse(m.Build('/static/pics/test.png',m.MakeMap(s)))
+
 
 class RoomsView(ListView, LoginRequiredMixin):
     model = EmployeeState

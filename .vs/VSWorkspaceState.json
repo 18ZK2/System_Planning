@@ -3,8 +3,11 @@
     "",
     "\\accounts",
     "\\accounts\\templates",
-    "\\accounts\\templates\\accounts"
+    "\\accounts\\templates\\accounts",
+    "\\myproject",
+    "\\static",
+    "\\static\\pics"
   ],
-  "SelectedNode": "\\accounts\\templates\\accounts\\shirahama2f.html",
+  "SelectedNode": "\\accounts\\views.py",
   "PreviewInSolutionExplorer": false
 }

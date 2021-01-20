@@ -56,6 +56,11 @@ def TableInfo(num):
 def AddMap(name,shape,coords,):
     m = MapsSettings(RoomName=name,Shape=shape,Coords=coords)
     m.save()
+#マップ情報をstartからendまで取得
+def SelectMap(start,end):
+
+    cmd = 'select *from '+tableNames[10][0]+' where id between '+str(start)+' and '+str(end)
+    return Execute(cmd)
 #一番新しいマップ番号
 def RatestMapNum():
 

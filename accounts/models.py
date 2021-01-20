@@ -21,7 +21,7 @@ class AuthUserManager(BaseUserManager):
         :return: AuthUserオブジェクト
         """
         if not email:
-            raise ValueError('Users must have an email')
+            raise ValueError('Users must have an email') 
         if not userID:
             raise ValueError('Users must have an userID')
 
