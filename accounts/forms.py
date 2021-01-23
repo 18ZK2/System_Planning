@@ -3,7 +3,7 @@ from django.contrib.admin import widgets
 from django import forms
 import os
 import sqlite3
-from .models import ImageSettings
+from .models import ImageSettings,Image
 class LoginForm(auth_forms.AuthenticationForm):
     '''ログインフォーム'''
     def __init__(self, *args, **kw):
@@ -47,4 +47,9 @@ class SelectMapForm(forms.Form):
         required=True,
         widget=forms.widgets.Select
     )
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['picture', 'title']
     

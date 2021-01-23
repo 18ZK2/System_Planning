@@ -9,14 +9,12 @@ from django.urls import reverse
 from urllib.parse import urlencode
 from . import forms
 from . import models
-from .models import EmployeeState
-from .models import MapsSettings
-from .models import ImageSettings
+from .models import EmployeeState,MapsSettings,ImageSettings,Image
 from django.template import context
 import sqlite3
 from django.db.models import Min
 from django.contrib.auth.decorators import login_required
-from .forms import SearchForm,MakeMapForm,MapNameForm,SelectMapForm
+from .forms import SearchForm,MakeMapForm,MapNameForm,SelectMapForm,ImageForm
 from .dbManage import StateSearch,PlaceSearch,TableInfo,empStateDic,RatestMapNum,SelectMap
 from .AddMap import CheckinMaps,BuildHTML
 from django.db.models import Q
@@ -155,9 +153,24 @@ def MakeMaps(request):
 
         slicedTexts = cm.SplitTexts(f.cleaned_data['slicedMaps'])
         cm.NumberingImagemapShapes(slicedTexts,val)
-        
+        return redirect("index2")
 
-    return render(request,url,{'form':f})
+    else:
+        return render(request,url,{'form':f})
+
+
+def MakeImages(request):
+    #画像追加
+    if request.method == "POST":
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('index2')
+    else:
+        form = ImageForm()
+
+    context = {'form':form}
+    return render(request, 'accounts/addImage.html', context)
 
 @csrf_exempt
 def ShowMap(request):

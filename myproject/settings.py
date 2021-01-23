@@ -128,3 +128,5 @@ LOGIN_REDIRECT_URL = 'index2' # ログイン後のリダイレクト先
 LOGOUT_REDIRECT_URL = 'index2' # ログアウト後のリダイレクト先
 
 AUTH_USER_MODEL = 'accounts.AuthUser'
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

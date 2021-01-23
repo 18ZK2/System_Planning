@@ -121,3 +121,10 @@ class MapsSettings(models.Model):
     Shape = models.CharField(max_length=100)
     Coords = models.CharField(max_length=100)
     Image = models.ForeignKey(ImageSettings, null=True,on_delete=models.CASCADE)
+
+class Image(models.Model):
+    picture = models.ImageField(upload_to='static/pics/')
+    title = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
