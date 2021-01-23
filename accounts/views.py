@@ -5,18 +5,22 @@ from django.views.generic import TemplateView, ListView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy 
 from django.http import HttpResponse, request
+from django.urls import reverse
+from urllib.parse import urlencode
 from . import forms
 from . import models
 from .models import EmployeeState
+from .models import MapsSettings
+from .models import ImageSettings
 from django.template import context
 import sqlite3
+from django.db.models import Min
 from django.contrib.auth.decorators import login_required
-from .forms import SearchForm,MakeMapForm,MapNameForm
+from .forms import SearchForm,MakeMapForm,MapNameForm,SelectMapForm
 from .dbManage import StateSearch,PlaceSearch,TableInfo,empStateDic,RatestMapNum,SelectMap
 from .AddMap import CheckinMaps,BuildHTML
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
-
 def index(request):
     return render(request, "accounts/index.html")
 
@@ -30,12 +34,24 @@ class MyLogoutView(LoginRequiredMixin, LogoutView):
 
 @login_required
 def index2(request):
+    f = SelectMapForm()
     username = request.user.userID
     data = EmployeeState.objects.all().filter(userID=username)
-    print(data)
-    params = {'data': data}
-    return render(request, "accounts/index2.html",params)
+    params = {'data': data,'form':f}
+    if(request.method =='POST'):
+        f = SelectMapForm(request.POST)
+        if(f.is_valid()):
+            val=f.cleaned_data['SelectMap']
+            #ここからshowmapにvalを渡す
+            redirect_url = reverse('showMap')
+            # パラメータのdictをurlencodeする。複数のパラメータを含めることも可能
+            parameters = urlencode({'param': val})
+            # # URLにパラメータを付与する
+            url = f'{redirect_url}?{parameters}'
+            return redirect(url)
+            #return redirect("showMap")
 
+    return render(request, "accounts/index2.html",params)
 @login_required
 def StateView(request):
     template_name = "accounts/state.html"
@@ -135,8 +151,10 @@ def MakeMaps(request):
         f = MakeMapForm(request.POST)
         print(f)
         cm = CheckinMaps()
+        val=f.cleaned_data['SelectMap']
+
         slicedTexts = cm.SplitTexts(f.cleaned_data['slicedMaps'])
-        cm.NumberingImagemapShapes(slicedTexts)
+        cm.NumberingImagemapShapes(slicedTexts,val)
         
 
     return render(request,url,{'form':f})
@@ -144,9 +162,22 @@ def MakeMaps(request):
 @csrf_exempt
 def ShowMap(request):
     m = BuildHTML()
-    s = SelectMap(0,6)
-    
-    return HttpResponse(m.Build('/static/pics/test.png',m.MakeMap(s)))
+    #index2からのvalを取得
+    val = request.GET.get('param')
+    #条件を満たすレコードの数を取得
+    IDs =MapsSettings.objects.filter(Image_id=val).count()
+    #最小ID
+    MinID =MapsSettings.objects.filter(Image_id=val).aggregate(Min('id'))
+    obj = ImageSettings.objects.filter(id=val).first()
+    PicPass='/static/pics/{}.png'
+    #条件を満たす画像名取得
+    Pic1=getattr(obj, 'ImageName')
+    #最小IDから最小ID+個数-1(=最大ID)まで
+    if IDs!=0:
+        print(IDs)
+        s = SelectMap(MinID['id__min'],MinID['id__min']+IDs-1)
+        #PicPassとpic1を結合
+        return HttpResponse(m.Build(PicPass.format(Pic1),m.MakeMap(s)))
 
 
 class RoomsView(ListView, LoginRequiredMixin):

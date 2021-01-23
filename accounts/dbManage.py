@@ -53,8 +53,8 @@ def TableInfo(num):
     exeCode = 'PRAGMA table_info('+tableNames[num][0]+')'
     return Execute(exeCode)
 #マップ情報の追加
-def AddMap(name,shape,coords,):
-    m = MapsSettings(RoomName=name,Shape=shape,Coords=coords)
+def AddMap(name,shape,coords,Image):
+    m = MapsSettings(RoomName=name,Shape=shape,Coords=coords,Image_id=Image)
     m.save()
 #マップ情報をstartからendまで取得
 def SelectMap(start,end):

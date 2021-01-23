@@ -3,7 +3,7 @@ from django.contrib.admin import widgets
 from django import forms
 import os
 import sqlite3
-
+from .models import ImageSettings
 class LoginForm(auth_forms.AuthenticationForm):
     '''ログインフォーム'''
     def __init__(self, *args, **kw):
@@ -19,6 +19,32 @@ class SearchForm(forms.Form):
 class MakeMapForm(forms.Form):
 
     slicedMaps = forms.CharField(widget=forms.Textarea)
+    mylist=[]
+    #データベースからlistへ
+    for e in ImageSettings.objects.all():
+        ap=(e.pk,e.ImageName)
+        mylist.append(ap)
+    tup=tuple(mylist)
+    #tupleに変換
+    SelectMap=forms.ChoiceField(
+        choices=tup,
+        required=True,
+        widget=forms.widgets.Select
+    )
 class MapNameForm(forms.Form):
 
     name = forms.CharField(label='部屋名',required=False,)
+
+#index2に表示
+class SelectMapForm(forms.Form):
+    mylist=[]
+    for e in ImageSettings.objects.all():
+        ap=(e.pk,e.ImageName)
+        mylist.append(ap)
+    tup=tuple(mylist)
+    SelectMap=forms.ChoiceField(
+        choices=tup,
+        required=True,
+        widget=forms.widgets.Select
+    )
+    

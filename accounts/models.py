@@ -113,7 +113,11 @@ class EmployeeState(models.Model):
     RoomID = models.CharField(max_length=100, null=True, blank=True)
     regist_date = models.DateTimeField(default=timezone.now)
 
+class ImageSettings(models.Model):
+    ImageName = models.CharField(max_length=100)
+
 class MapsSettings(models.Model):
     RoomName = models.CharField(max_length=100)
     Shape = models.CharField(max_length=100)
     Coords = models.CharField(max_length=100)
+    Image = models.ForeignKey(ImageSettings, null=True,on_delete=models.CASCADE)

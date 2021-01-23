@@ -15,7 +15,7 @@ class CheckinMaps(object):
         slicedText = texts.split('\r\n')
         return slicedText[1:-1]
     #番号付け
-    def NumberingImagemapShapes(self,texts):
+    def NumberingImagemapShapes(self,texts,val):
 
         # <area shape="rect" coords="202,328,534,636" href="#" alt="" />
         start = RatestMapNum()
@@ -39,7 +39,7 @@ class CheckinMaps(object):
             shape = findall(r'shape="(.+)" coords=',text)[0]
             coords = findall(r'coords="(.+)" href=',text)[0]
             #DBに登録　とりあえず名前は'test{num}'
-            AddMap('test'+str(num),shape,coords)
+            AddMap('test'+str(num),shape,coords,val)
         
         return result
     #html組み立te
