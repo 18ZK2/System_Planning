@@ -163,20 +163,28 @@ def MakeMaps(request):
 def ShowMap(request):
     m = BuildHTML()
     #index2からのvalを取得
-    val = request.GET.get('param')
-    #条件を満たすレコードの数を取得
-    IDs =MapsSettings.objects.filter(Image_id=val).count()
-    #最小ID
-    MinID =MapsSettings.objects.filter(Image_id=val).aggregate(Min('id'))
-    obj = ImageSettings.objects.filter(id=val).first()
     PicPass='/static/pics/{}.png'
     #条件を満たす画像名取得
+    val = request.GET.get('param')
+    obj = ImageSettings.objects.filter(id=val).first()
     Pic1=getattr(obj, 'ImageName')
-    #最小IDから最小ID+個数-1(=最大ID)まで
-    if IDs!=0:
-        print(IDs)
-        s = SelectMap(MinID['id__min'],MinID['id__min']+IDs-1)
-        #PicPassとpic1を結合
+    #条件を満たすレコードを取得
+    s = SelectMap(val)
+
+    username = request.user.userID
+    data = EmployeeState.objects.all()
+    params = {'data': data}
+    if request.method == "POST":
+        
+        room = request.POST.get('get_room_name', '0')
+        username = request.user.userID
+
+        S = EmployeeState.objects.filter(userID=username).first()
+        S.RoomID = room
+        S.save()
+        
+        return redirect("index2")
+    else:
         return HttpResponse(m.Build(PicPass.format(Pic1),m.MakeMap(s)))
 
 

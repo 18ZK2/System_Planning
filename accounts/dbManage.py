@@ -57,9 +57,9 @@ def AddMap(name,shape,coords,Image):
     m = MapsSettings(RoomName=name,Shape=shape,Coords=coords,Image_id=Image)
     m.save()
 #マップ情報をstartからendまで取得
-def SelectMap(start,end):
+def SelectMap(imageID):
 
-    cmd = 'select *from '+tableNames[10][0]+' where id between '+str(start)+' and '+str(end)
+    cmd = 'select *from '+tableNames[10][0]+' where Image_id ='+str(imageID)
     return Execute(cmd)
 #一番新しいマップ番号
 def RatestMapNum():
