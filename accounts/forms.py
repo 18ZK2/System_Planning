@@ -3,7 +3,8 @@ from django.contrib.admin import widgets
 from django import forms
 import os
 import sqlite3
-from .models import ImageSettings,Image
+from .models import ImageSettings
+#from .models import Image
 class LoginForm(auth_forms.AuthenticationForm):
     '''ログインフォーム'''
     def __init__(self, *args, **kw):
@@ -38,6 +39,7 @@ class MapNameForm(forms.Form):
 #index2に表示
 class SelectMapForm(forms.Form):
     mylist=[]
+    print(ImageSettings.objects.all())
     for e in ImageSettings.objects.all():
         ap=(e.pk,e.ImageName)
         mylist.append(ap)
@@ -50,6 +52,6 @@ class SelectMapForm(forms.Form):
 
 class ImageForm(forms.ModelForm):
     class Meta:
-        model = Image
-        fields = ['picture', 'title']
+        model = ImageSettings
+        fields = ['picture', 'ImageName']
     

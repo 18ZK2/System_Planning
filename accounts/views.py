@@ -9,12 +9,13 @@ from django.urls import reverse
 from urllib.parse import urlencode
 from . import forms
 from . import models
-from .models import EmployeeState,MapsSettings,ImageSettings,Image
+from .models import EmployeeState,MapsSettings,ImageSettings
 from django.template import context
 import sqlite3
 from django.db.models import Min
 from django.contrib.auth.decorators import login_required
-from .forms import SearchForm,MakeMapForm,MapNameForm,SelectMapForm,ImageForm
+from .forms import SearchForm,MakeMapForm,MapNameForm,SelectMapForm
+from .forms import ImageForm
 from .dbManage import StateSearch,PlaceSearch,TableInfo,empStateDic,RatestMapNum,SelectMap
 from .AddMap import CheckinMaps,BuildHTML
 from django.db.models import Q
@@ -35,6 +36,7 @@ def index2(request):
     f = SelectMapForm()
     username = request.user.userID
     data = EmployeeState.objects.all().filter(userID=username)
+    print(ImageSettings.objects.all())
     params = {'data': data,'form':f}
     if(request.method =='POST'):
         f = SelectMapForm(request.POST)

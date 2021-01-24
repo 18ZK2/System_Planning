@@ -114,17 +114,13 @@ class EmployeeState(models.Model):
     regist_date = models.DateTimeField(default=timezone.now)
 
 class ImageSettings(models.Model):
+    picture = models.ImageField(upload_to='static/pics/',null=True)
     ImageName = models.CharField(max_length=100)
+    def __str__(self):
+        return self.ImageName
 
 class MapsSettings(models.Model):
     RoomName = models.CharField(max_length=100)
     Shape = models.CharField(max_length=100)
     Coords = models.CharField(max_length=100)
     Image = models.ForeignKey(ImageSettings, null=True,on_delete=models.CASCADE)
-
-class Image(models.Model):
-    picture = models.ImageField(upload_to='static/pics/')
-    title = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
