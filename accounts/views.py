@@ -92,55 +92,7 @@ def Search(request):
             result = [StateSearch(res['nameSearchField']),PlaceSearch(res['placeSearcField'])]
     return render(request,url,
                   {'form':f,'searchResult':result[0],'placeResult':result[1]})
-
 @login_required
-def CheckIn(request):
-    #部屋の場所変更
-    template_name = "accounts/shirahama1f.html"
-    username = request.user.userID
-    data = EmployeeState.objects.all()
-    params = {'data': data}
-
-    if request.method == "POST":
-        
-        room = request.POST.get('get_room_name', '0')
-        username = request.user.userID
-
-        S = EmployeeState.objects.filter(userID=username).first()
-        S.RoomID = room
-        S.save()
-
-        return redirect("index2")
-
-    else:
-        return render(request, template_name, params)
-
-
-    return(request, template_name, params)
-
-def CheckIn2(request):
-    #部屋の場所変更
-    template_name = "accounts/shirahama2f.html"
-    username = request.user.userID
-    data = EmployeeState.objects.all()
-    params = {'data': data}
-
-    if request.method == "POST":
-        
-        room = request.POST.get('get_room_name', '0')
-        username = request.user.userID
-
-        S = EmployeeState.objects.filter(userID=username).first()
-        S.RoomID = room
-        S.save()
-        
-        return redirect("index2")
-
-    else:
-        return render(request, template_name, params)
-
-
-    return(request, template_name, params)
 
 def MakeMaps(request):
     #マップ追加
@@ -159,7 +111,6 @@ def MakeMaps(request):
 
     else:
         return render(request,url,{'form':f})
-
 
 def MakeImages(request):
     #画像追加
@@ -220,3 +171,53 @@ class RoomsView(ListView, LoginRequiredMixin):
         else:
             object_list = EmployeeState.objects.all()
         return object_list
+
+'''
+def CheckIn(request):
+    #部屋の場所変更
+    template_name = "accounts/shirahama1f.html"
+    username = request.user.userID
+    data = EmployeeState.objects.all()
+    params = {'data': data}
+
+    if request.method == "POST":
+        
+        room = request.POST.get('get_room_name', '0')
+        username = request.user.userID
+
+        S = EmployeeState.objects.filter(userID=username).first()
+        S.RoomID = room
+        S.save()
+
+        return redirect("index2")
+
+    else:
+        return render(request, template_name, params)
+
+
+    return(request, template_name, params)
+
+def CheckIn2(request):
+    #部屋の場所変更
+    template_name = "accounts/shirahama2f.html"
+    username = request.user.userID
+    data = EmployeeState.objects.all()
+    params = {'data': data}
+
+    if request.method == "POST":
+        
+        room = request.POST.get('get_room_name', '0')
+        username = request.user.userID
+
+        S = EmployeeState.objects.filter(userID=username).first()
+        S.RoomID = room
+        S.save()
+        
+        return redirect("index2")
+
+    else:
+        return render(request, template_name, params)
+
+
+    return(request, template_name, params)
+'''
