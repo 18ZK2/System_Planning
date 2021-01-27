@@ -178,14 +178,12 @@ def MakeImages(request):
 def ShowMap(request):
     m = BuildHTML()
     #index2からのvalを取得
-    PicPass='/static/pics/{}.png'
-    #条件を満たす画像名取得
     val = request.GET.get('param')
     obj = ImageSettings.objects.filter(id=val).first()
-    Pic1=getattr(obj, 'ImageName')
+    #条件を満たす画像のパス取得
+    Pic1=getattr(obj, 'picture')
     #条件を満たすレコードを取得
     s = SelectMap(val)
-
     username = request.user.userID
     data = EmployeeState.objects.all()
     params = {'data': data}
@@ -200,8 +198,7 @@ def ShowMap(request):
         
         return redirect("index2")
     else:
-        return HttpResponse(m.Build(PicPass.format(Pic1),m.MakeMap(s)))
-
+        return HttpResponse(m.Build('/'+str(Pic1),m.MakeMap(s)))
 
 class RoomsView(ListView, LoginRequiredMixin):
     model = EmployeeState
