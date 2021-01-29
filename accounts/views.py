@@ -16,7 +16,7 @@ from django.db.models import Min
 from django.contrib.auth.decorators import login_required
 from .forms import SearchForm,MakeMapForm,MapNameForm,SelectMapForm
 from .forms import ImageForm
-from .dbManage import StateSearch,PlaceSearch,TableInfo,empStateDic,RatestMapNum,SelectMap
+from .dbManage import StateSearch,PlaceSearch,TableInfo,empStateDic,RatestMapNum,SelectMap,AddMap
 from .AddMap import CheckinMaps,BuildHTML
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
@@ -106,10 +106,18 @@ def MakeMaps(request):
         val=f.cleaned_data['SelectMap']
 
         slicedTexts = cm.SplitTexts(f.cleaned_data['slicedMaps'])
-        cm.NumberingImagemapShapes(slicedTexts,val)
+        res = cm.NumberingImagemapShapes(slicedTexts)
+        print('res + ',res)
+        num = RatestMapNum()
+        for r in res:
+            #DBに登録　とりあえず名前は'test{num}'
+            AddMap('test'+str(num),r['shape'],r['coords'],int(val))
+            num+=1
+
         return redirect("index2")
 
     else:
+
         return render(request,url,{'form':f})
 
 def MakeImages(request):

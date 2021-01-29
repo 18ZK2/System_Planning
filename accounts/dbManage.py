@@ -63,9 +63,16 @@ def SelectMap(imageID):
     return Execute(cmd)
 #一番新しいマップ番号
 def RatestMapNum():
-
     exeCode = 'select max(id) from '+tableNames[10][0]
-    return Execute(exeCode)
+    start = Execute(exeCode)
+    if(start[0][0]==None):
+
+        start=0
+    else:
+
+        start = start[0][0]
+    
+    return start
 #テーブル名取得
 def TableNames():
 
