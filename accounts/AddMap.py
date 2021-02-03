@@ -11,14 +11,20 @@ class CheckinMaps(object):
     def SplitTexts(self,texts):
 
         slicedText = texts.split('\r\n')
-        return slicedText[1:-1]
+        if(slicedText[0]=='<map name="ImageMap">' and slicedText[-1] == '</map>'):
+
+            return slicedText[1:-1]
+        else:
+            
+            return -1
     #番号付け
     def NumberingImagemapShapes(self,texts):
 
         # <area shape="rect" coords="202,328,534,636" href="#" alt="" />
         start = RatestMapNum()
         result=[]
-        for i in range(len(texts)):
+        length = len(texts)
+        for i in range(length):
             num = i+start
             text = texts[i]
             #番号付け
@@ -33,9 +39,9 @@ class CheckinMaps(object):
             r = {'shape':shape,'coords':coords,}
             result.append(r)
         return result
-    #html組み立te
-    
 
+
+#html組み立te
 class BuildHTML(object):
 
     def __init__(self):

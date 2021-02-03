@@ -106,6 +106,9 @@ def MakeMaps(request):
         val=f.cleaned_data['SelectMap']
 
         slicedTexts = cm.SplitTexts(f.cleaned_data['slicedMaps'])
+        if(slicedTexts==-1):
+
+            return render(request,url,{'form':f,'error':'正しく範囲選択されませんでした'})
         res = cm.NumberingImagemapShapes(slicedTexts)
         print('res + ',res)
         num = RatestMapNum()
@@ -118,7 +121,7 @@ def MakeMaps(request):
 
     else:
 
-        return render(request,url,{'form':f})
+        return render(request,url,{'form':f,'error':''})
 
 def MakeImages(request):
     #画像追加

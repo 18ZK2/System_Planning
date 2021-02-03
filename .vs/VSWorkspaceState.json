@@ -4,9 +4,7 @@
     "\\accounts",
     "\\accounts\\templates",
     "\\accounts\\templates\\accounts",
-    "\\myproject",
-    "\\static",
-    "\\static\\pics"
+    "\\myproject"
   ],
   "SelectedNode": "\\accounts\\AddMap.py",
   "PreviewInSolutionExplorer": false
